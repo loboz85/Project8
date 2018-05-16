@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2016 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2016 The Android Open Source Project
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
      You may obtain a copy of the License at
@@ -9,10 +8,8 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
--->
-<!-- Layout for the editor -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+--><!-- Layout for the editor -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,7 +17,7 @@
     android:padding="@dimen/activity_margin"
     tools:context=".EditorActivity">
 
-    <!-- Overview category -->
+    <!-- Description category -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,34 +25,54 @@
 
         <!-- Label -->
         <TextView
-            android:text="@string/category_overview"
-            style="@style/CategoryStyle" />
+            style="@style/CategoryStyle"
+            android:text="@string/category_des" />
 
         <!-- Input fields -->
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:paddingLeft="4dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="4dp">
 
             <!-- Name field -->
             <EditText
-                android:id="@+id/edit_pet_name"
-                android:hint="@string/hint_pet_name"
-                android:inputType="textCapWords"
-                style="@style/EditorFieldStyle" />
+                android:id="@+id/edit_prod_name"
+                style="@style/EditorFieldStyle"
+                android:hint="@string/hint_prod_name"
+                android:inputType="textCapWords" />
 
-            <!-- Breed field -->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:paddingLeft="@dimen/editor_padding">
+
+                <!-- price field -->
+                <EditText
+                    android:id="@+id/edit_price"
+                    style="@style/EditorFieldStyle"
+                    android:hint="@string/price"
+                    android:inputType="number" />
+
+                <!-- currency -->
+                <TextView
+                    android:id="@+id/currency"
+                    style="@style/EditorUnitsStyle"
+                    android:text="@string/currency" />
+            </RelativeLayout>
+
             <EditText
-                android:id="@+id/edit_pet_breed"
-                android:hint="@string/hint_pet_breed"
-                android:inputType="textCapWords"
-                style="@style/EditorFieldStyle" />
+                android:id="@+id/edit_quantity"
+                style="@style/EditorFieldStyle"
+                android:hint="@string/quantity"
+                android:inputType="number" />
+
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Gender category -->
+    <!-- Supplier category -->
     <LinearLayout
         android:id="@+id/container_gender"
         android:layout_width="match_parent"
@@ -64,57 +81,34 @@
 
         <!-- Label -->
         <TextView
-            android:text="@string/category_gender"
-            style="@style/CategoryStyle" />
+            style="@style/CategoryStyle"
+            android:text="@string/supp" />
 
         <!-- Input field -->
         <LinearLayout
+            android:layout_width="@dimen/layout_width"
             android:layout_height="wrap_content"
-            android:layout_width="0dp"
             android:layout_weight="2"
             android:orientation="vertical">
 
-            <!-- Gender drop-down spinner -->
+            <!-- Supplier drop-down spinner -->
             <Spinner
-                android:id="@+id/spinner_gender"
-                android:layout_height="48dp"
+                android:id="@+id/spinner_supp"
                 android:layout_width="wrap_content"
-                android:paddingRight="16dp"
-                android:spinnerMode="dropdown"/>
-        </LinearLayout>
-    </LinearLayout>
+                android:layout_height="@dimen/spinner_height"
+                android:paddingRight="@dimen/activity_margin"
+                android:spinnerMode="dropdown" />
 
-    <!-- Measurement category -->
-    <LinearLayout
-        android:id="@+id/container_measurement"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <!-- Label -->
-        <TextView
-            android:text="@string/category_measurement"
-            style="@style/CategoryStyle" />
-
-        <!-- Input fields -->
-        <RelativeLayout
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:paddingLeft="4dp">
-
-            <!-- Weight field -->
+            <!-- Phone number field -->
             <EditText
-                android:id="@+id/edit_pet_weight"
-                android:hint="@string/hint_pet_weight"
-                android:inputType="number"
-                style="@style/EditorFieldStyle" />
+                android:id="@+id/edit_phone"
+                style="@style/EditorFieldStyle"
+                android:hint="@string/hint_phone"
+                android:inputType="number" />
+        </LinearLayout>
 
-            <!-- Units for weight (kg) -->
-            <TextView
-                android:id="@+id/label_weight_units"
-                android:text="@string/unit_pet_weight"
-                style="@style/EditorUnitsStyle"/>
-        </RelativeLayout>
+
     </LinearLayout>
+
+
 </LinearLayout>

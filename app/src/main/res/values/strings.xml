@@ -12,16 +12,16 @@
 -->
 <resources>
     <!-- Name for the application [CHAR LIMIT=12] -->
-    <string name="app_name">Pets</string>
+    <string name="app_name">Products</string>
 
-    <!-- Label for overflow menu option that inserts fake pet data into the app [CHAR LIMIT=20] -->
+    <!-- Label for overflow menu option that inserts fake product data into the app [CHAR LIMIT=20] -->
     <string name="action_insert_dummy_data">Insert Dummy Data</string>
 
-    <!-- Label for overflow menu option that deletes all pet data in the app [CHAR LIMIT=20] -->
-    <string name="action_delete_all_entries">Delete All Pets</string>
+    <!-- Label for overflow menu option that deletes all products data in the app [CHAR LIMIT=20] -->
+    <string name="action_delete_all_entries">Delete All Products</string>
 
     <!-- Title for the activity to add a new pet [CHAR LIMIT=20] -->
-    <string name="editor_activity_title_new_pet">Add a Pet</string>
+    <string name="editor_activity_title_new_pet">Add a Product</string>
 
     <!-- Label for editor menu option to save pet and leave editor [CHAR LIMIT=20] -->
     <string name="action_save">Save</string>
@@ -30,32 +30,32 @@
     <string name="action_delete">Delete</string>
 
     <!-- Label for overview category of attributes in the editor [CHAR LIMIT=30] -->
-    <string name="category_overview">Overview</string>
+    <string name="category_des">Description</string>
 
-    <!-- Label for gender information in the editor [CHAR LIMIT=30] -->
-    <string name="category_gender">Gender</string>
-
-    <!-- Label for measurement information in the editor [CHAR LIMIT=30] -->
-    <string name="category_measurement">Measurement</string>
+    <!-- Label for supplier information in the editor [CHAR LIMIT=30] -->
+    <string name="supp">Supplier</string>
 
     <!-- Text hint for name field in the editor [CHAR LIMIT=30] -->
-    <string name="hint_pet_name">Name</string>
+    <string name="hint_prod_name">Name</string>
 
-    <!-- Text hint for breed field in the editor [CHAR LIMIT=30] -->
-    <string name="hint_pet_breed">Breed</string>
+    <!-- Text hint for price field in the editor [CHAR LIMIT=30] -->
+    <string name="price">Price</string>
 
-    <!-- Text hint for name field in the editor [CHAR LIMIT=30] -->
-    <string name="hint_pet_weight">Weight</string>
+    <!-- Text hint for quantity field in the editor [CHAR LIMIT=30] -->
+    <string name="quantity">Quantity</string>
 
-    <!-- Units for weight of the pet (kilograms) [CHAR LIMIT=5] -->
-    <string name="unit_pet_weight">kg</string>
+    <!-- Text hint for phone number in the editor [CHAR LIMIT=30] -->
+    <string name="hint_phone">Phone Number</string>
 
-    <!-- Label for dropdown menu option if the pet's gender is unknown [CHAR LIMIT=20] -->
-    <string name="gender_unknown">Unknown</string>
+    <!-- Currency for price [CHAR LIMIT=5] -->
+    <string name="currency">$</string>
 
-    <!-- Label for dropdown menu option if the pet is male [CHAR LIMIT=20] -->
-    <string name="gender_male">Male</string>
+    <!-- Label for dropdown menu option if supplier is Mark (Main supplier - default) [CHAR LIMIT=20] -->
+    <string name="supp_mark">Mark</string>
 
-    <!-- Label for dropdown menu option if the pet is female [CHAR LIMIT=20] -->
-    <string name="gender_female">Female</string>
+    <!-- Label for dropdown menu option if supplier is John [CHAR LIMIT=20] -->
+    <string name="supp_john">John</string>
+
+    <!-- Label for dropdown menu option if supplier is Ann[CHAR LIMIT=20] -->
+    <string name="supp_ann">Ann</string>
 </resources>
