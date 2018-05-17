@@ -26,7 +26,6 @@ import com.example.android.Project7.data.ProductContract.ProdEntry;
  */
 public class ProdDbHelper extends SQLiteOpenHelper {
 
-    public static final String LOG_TAG = ProdDbHelper.class.getSimpleName();
 
     /**
      * Name of the database file

@@ -146,14 +146,14 @@ public class CatalogActivity extends AppCompatActivity {
     }
 
     /**
-     * Helper method to insert hardcoded pet data into the database. For debugging purposes only.
+     * Helper method to insert hardcoded product data into the database. For debugging purposes only.
      */
-    private void insertPet() {
+    private void insertProduct() {
         // Gets the database in write mode
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
         // Create a ContentValues object where column names are the keys,
-        // and Toto's pet attributes are the values.
+        // and Mars products attributes are the values.
         ContentValues values = new ContentValues();
         values.put(ProdEntry.COLUMN_PROD_NAME, "Mars");
         values.put(ProdEntry.COLUMN_PROD_PRICE, "2");
@@ -185,7 +185,7 @@ public class CatalogActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // Respond to a click on the "Insert dummy data" menu option
             case R.id.action_insert_dummy_data:
-                insertPet();
+                insertProduct();
                 displayDatabaseInfo();
                 return true;
             // Respond to a click on the "Delete all entries" menu option

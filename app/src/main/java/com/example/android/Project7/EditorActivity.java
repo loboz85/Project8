@@ -132,10 +132,16 @@ public class EditorActivity extends AppCompatActivity {
         // Use trim to eliminate leading or trailing white space
         String nameString = mNameEditText.getText().toString().trim();
         String priceString = mPriceEditText.getText().toString().trim();
-        int price = Integer.parseInt(priceString);
         String quantityString = mQuantityEditText.getText().toString().trim();
-        int quantity = Integer.parseInt(quantityString);
         String phoneString = mPhoneEditText.getText().toString().trim();
+
+        if ("".equals(priceString) || "".equals(quantityString) || "".equals(phoneString)) {
+
+            Toast.makeText(this, "All fields need to be filled, please add product again", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        int price = Integer.parseInt(priceString);
+        int quantity = Integer.parseInt(quantityString);
         int phone = Integer.parseInt(phoneString);
 
         // Create database helper
