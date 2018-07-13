@@ -19,6 +19,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -173,14 +174,11 @@ public class CatalogActivity extends AppCompatActivity {
         values.put(ProdEntry.COLUMN_PROD_SUPP, ProdEntry.SUPP_JOHN);
         values.put(ProdEntry.COLUMN_SUPP_PHONE, "+605784465");
 
-        // Insert a new row for Mars in the database, returning the ID of that new row.
-        // The first argument for db.insert() is the products table name.
-        // The second argument provides the name of a column in which the framework
-        // can insert NULL in the event that the ContentValues is empty (if
-        // this is set to "null", then the framework will not insert a row when
-        // there are no values).
-        // The third argument is the ContentValues object containing the info for Mars.
-        long newRowId = db.insert(ProdEntry.TABLE_NAME, null, values);
+        // Insert a new row for Toto into the provider using the ContentResolver.
+        // Use the {@link PetEntry#CONTENT_URI} to indicate that we want to insert
+        // into the pets database table.
+        // Receive the new content URI that will allow us to access Toto's data in the future.
+        Uri newUri = getContentResolver().insert(ProdEntry.CONTENT_URI, values);
     }
 
     @Override

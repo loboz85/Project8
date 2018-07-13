@@ -58,4 +58,11 @@
 
     <!-- Label for dropdown menu option if supplier is Ann[CHAR LIMIT=20] -->
     <string name="supp_ann">Ann</string>
+
+
+    <!-- Toast message in editor when new pet has been successfully inserted [CHAR LIMIT=NONE] -->
+    <string name="editor_insert_prod_successful">Product saved</string>
+
+    <!-- Toast message in editor when new pet has failed to be inserted [CHAR LIMIT=NONE] -->
+    <string name="editor_insert_prod_failed">Error with saving product</string>
 </resources>

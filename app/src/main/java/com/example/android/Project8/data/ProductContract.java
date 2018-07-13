@@ -17,6 +17,7 @@ package com.example.android.Project8.data;
 
 import android.provider.BaseColumns;
 import android.net.Uri;
+import android.content.ContentResolver;
 /**
  * API Contract for the Store app.
  */
@@ -57,6 +58,18 @@ public final class ProductContract {
 
         /** The content URI to access the prod data in the provider */
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_PROD);
+
+        /**
+         * The MIME type of the {@link #CONTENT_URI} for a list of pets.
+         */
+        public static final String CONTENT_LIST_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_PROD;
+
+        /**
+         * The MIME type of the {@link #CONTENT_URI} for a single pet.
+         */
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_PROD;
 
         /**
          * Name of database table for products
@@ -114,6 +127,8 @@ public final class ProductContract {
         public static final int SUPP_MARK = 0;
         public static final int SUPP_JOHN = 1;
         public static final int SUPP_ANN = 2;
+
+
     }
 
 }
