@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.Project7.data;
+package com.example.android.Project8.data;
 
 import android.provider.BaseColumns;
-
+import android.net.Uri;
 /**
  * API Contract for the Store app.
  */
@@ -26,12 +26,37 @@ public final class ProductContract {
     // give it an empty constructor.
     private ProductContract() {
     }
+    /**
+     * The "Content authority" is a name for the entire content provider, similar to the
+     * relationship between a domain name and its website.  A convenient string to use for the
+     * content authority is the package name for the app, which is guaranteed to be unique on the
+     * device.
+     */
+    public static final String CONTENT_AUTHORITY = "com.example.android.Project8";
+
+    /**
+     * Use CONTENT_AUTHORITY to create the base of all URI's which apps will use to contact
+     * the content provider.
+     */
+    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+
+    /**
+     * Possible path (appended to base content URI for possible URI's)
+     * For instance, content://com.example.android.pets/pets/ is a valid path for
+     * looking at pet data. content://com.example.android.pets/staff/ will fail,
+     * as the ContentProvider hasn't been given any information on what to do with "staff".
+     */
+    public static final String PATH_PROD = "products";
+
 
     /**
      * Inner class that defines constant values for the products database table.
      * Each entry in the table represents a single product.
      */
     public static final class ProdEntry implements BaseColumns {
+
+        /** The content URI to access the prod data in the provider */
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_PROD);
 
         /**
          * Name of database table for products

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.Project7;
+package com.example.android.Project8;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
@@ -30,8 +30,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.android.Project7.data.ProductContract.ProdEntry;
-import com.example.android.Project7.data.ProdDbHelper;
+import com.example.android.Project8.data.ProductContract.ProdEntry;
+import com.example.android.Project8.data.ProdDbHelper;
 
 /**
  * Allows user to create a new product or edit an existing one.

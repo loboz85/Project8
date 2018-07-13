@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.Project7.data;
+package com.example.android.Project8.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.android.Project7.data.ProductContract.ProdEntry;
+import com.example.android.Project8.data.ProductContract.ProdEntry;
 
 /**
  * Database helper for Product app. Manages database creation and version management.
