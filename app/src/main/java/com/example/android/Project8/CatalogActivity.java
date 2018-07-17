@@ -15,8 +15,10 @@
  */
 package com.example.android.Project8;
 
+import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.Loader;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -34,7 +36,8 @@ import com.example.android.Project8.data.ProdDbHelper;
 /**
  * Displays list of products that were entered and stored in the app.
  */
-public class CatalogActivity extends AppCompatActivity {
+public class CatalogActivity extends AppCompatActivity implements
+        LoaderManager.LoaderCallbacks<Cursor>{
 
     /**
      * Database helper that will provide us access to the database
@@ -55,6 +58,15 @@ public class CatalogActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+        // Find the ListView which will be populated with the pet data
+        ListView petListView = (ListView) findViewById(R.id.list);
+
+        // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
+        View emptyView = findViewById(R.id.empty_view);
+        petListView.setEmptyView(emptyView);
+
 
         // To access our database, we instantiate our subclass of SQLiteOpenHelper
         // and pass the context, which is the current activity.
@@ -152,5 +164,20 @@ public class CatalogActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
     }
 }
