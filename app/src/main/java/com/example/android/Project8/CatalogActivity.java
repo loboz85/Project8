@@ -16,7 +16,9 @@
 package com.example.android.Project8;
 
 import android.app.LoaderManager;
+import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -28,6 +30,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.android.Project8.data.ProductContract.ProdEntry;
@@ -38,6 +41,12 @@ import com.example.android.Project8.data.ProdDbHelper;
  */
 public class CatalogActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor>{
+
+    /** Identifier for the pet data loader */
+    private static final int PROD_LOADER = 0;
+
+    /** Adapter for the ListView */
+    ProdCursorAdapter mCursorAdapter;
 
     /**
      * Database helper that will provide us access to the database
@@ -61,62 +70,52 @@ public class CatalogActivity extends AppCompatActivity implements
 
 
         // Find the ListView which will be populated with the pet data
-        ListView petListView = (ListView) findViewById(R.id.list);
+        ListView prodListView = (ListView) findViewById(R.id.list);
 
         // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
         View emptyView = findViewById(R.id.empty_view);
-        petListView.setEmptyView(emptyView);
+        prodListView.setEmptyView(emptyView);
 
+        // Setup an Adapter to create a list item for each row of pet data in the Cursor.
+        // There is no pet data yet (until the loader finishes) so pass in null for the Cursor.
+        mCursorAdapter = new ProdCursorAdapter(this, null);
+        prodListView.setAdapter(mCursorAdapter);
+
+
+
+
+        // Setup the item click listener
+        prodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                // Create new intent to go to {@link EditorActivity}
+                Intent intent = new Intent(CatalogActivity.this, EditorActivity.class);
+
+                // Form the content URI that represents the specific pet that was clicked on,
+                // by appending the "id" (passed as input to this method) onto the
+                // {@link PetEntry#CONTENT_URI}.
+                // For example, the URI would be "content://com.example.android.pets/pets/2"
+                // if the pet with ID 2 was clicked on.
+                Uri currentProdUri = ContentUris.withAppendedId(ProdEntry.CONTENT_URI, id);
+
+                // Set the URI on the data field of the intent
+                intent.setData(currentProdUri);
+
+                // Launch the {@link EditorActivity} to display the data for the current pet.
+                startActivity(intent);
+            }
+        });
+
+        // Kick off the loader
+        getLoaderManager().initLoader(PROD_LOADER, null, this);
 
         // To access our database, we instantiate our subclass of SQLiteOpenHelper
         // and pass the context, which is the current activity.
         mDbHelper = new ProdDbHelper(this);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        displayDatabaseInfo();
-    }
-
-    /**
-     * Temporary helper method to display information in the onscreen TextView about the state of
-     * the store database.
-     */
-    private void displayDatabaseInfo() {
-
-        // Define a projection that specifies which columns from the database
-        // you will actually use after this query.
-        String[] projection = {
-                ProdEntry._ID,
-                ProdEntry.COLUMN_PROD_NAME,
-                ProdEntry.COLUMN_PROD_PRICE,
-                ProdEntry.COLUMN_PROD_QUANTITY,
-                ProdEntry.COLUMN_PROD_SUPP,
-                ProdEntry.COLUMN_SUPP_PHONE};
-        System.out.println("**** ProdEntry.TABLE_NAME" + ProdEntry.TABLE_NAME);
 
 
-        // Perform a query on the provider using the ContentResolver.
-        // Use the {@link PetEntry#CONTENT_URI} to access the pet data.
-
-        System.out.println("**** ProdEntry.CONTENT_URI " + ProdEntry.CONTENT_URI);
-        Cursor cursor = getContentResolver().query(
-                ProdEntry.CONTENT_URI,   // The content URI of the words table
-                projection,             // The columns to return for each row
-                null,                   // Selection criteria
-                null,                   // Selection criteria
-                null);                  // The sort order for the returned rows
-        System.out.println("**** ProdEntry.CONTENT_URI " + cursor);
-
-        // Find the ListView which will be populated with the pet data
-        ListView prodListView = (ListView) findViewById(R.id.list);
-
-        // Setup an Adapter to create a list item for each row of pet data in the Cursor.
-        ProdCursorAdapter adapter = new ProdCursorAdapter(this, cursor);
-        // Attach the adapter to the ListView.
-        prodListView.setAdapter(adapter);
-    }
 
     /**
      * Helper method to insert hardcoded product data into the database. For debugging purposes only.
@@ -156,7 +155,6 @@ public class CatalogActivity extends AppCompatActivity implements
             // Respond to a click on the "Insert dummy data" menu option
             case R.id.action_insert_dummy_data:
                 insertProduct();
-                displayDatabaseInfo();
                 return true;
             // Respond to a click on the "Delete all entries" menu option
             case R.id.action_delete_all_entries:
@@ -168,16 +166,30 @@ public class CatalogActivity extends AppCompatActivity implements
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        return null;
+        // Define a projection that specifies the columns from the table we care about.
+        String[] projection = {
+                ProdEntry._ID,
+                ProdEntry.COLUMN_PROD_NAME,
+                ProdEntry.COLUMN_PROD_PRICE };
+
+        // This loader will execute the ContentProvider's query method on a background thread
+        return new CursorLoader(this,   // Parent activity context
+                ProdEntry.CONTENT_URI,   // Provider content URI to query
+                projection,             // Columns to include in the resulting Cursor
+                null,                   // No selection clause
+                null,                   // No selection arguments
+                null);                  // Default sort order;
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+    // Update {@link ProdCursorAdapter} with this new cursor containing updated prod data
+        mCursorAdapter.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
+        mCursorAdapter.swapCursor(null);
 
     }
 }

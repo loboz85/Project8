@@ -21,7 +21,7 @@
     <string name="action_delete_all_entries">Delete All Products</string>
 
     <!-- Title for the activity to add a new pet [CHAR LIMIT=20] -->
-    <string name="editor_activity_title_new_pet">Add a Product</string>
+    <string name="editor_activity_title_new_prod">Add a Product</string>
 
     <!-- Label for editor menu option to save pet and leave editor [CHAR LIMIT=20] -->
     <string name="action_save">Save</string>
@@ -71,5 +71,23 @@
 
     <!-- Subtitle text for the empty view that prompts the user to add a pet [CHAR LIMIT=50] -->
     <string name="empty_view_subtitle_text">Get started by adding a product</string>
+
+    <!-- Title for the activity to edit an existing pet [CHAR LIMIT=20] -->
+    <string name="editor_activity_title_edit_prod">Edit Prod</string>
+
+    <!-- Toast message in editor when current prod was successfully updated [CHAR LIMIT=NONE] -->
+    <string name="editor_update_prod_successful">Product updated</string>
+
+    <!-- Toast message in editor when current prod has failed to be updated [CHAR LIMIT=NONE] -->
+    <string name="editor_update_prod_failed">Error with updating pet</string>
+
+    <!-- Dialog message when user is leaving editor but hasn't saved changes [CHAR LIMIT=NONE] -->
+    <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+
+    <!-- Dialog button text for the option to discard a user's changes [CHAR LIMIT=20] -->
+    <string name="discard">Discard</string>
+
+    <!-- Dialog button text for the option to keep editing the current pet [CHAR LIMIT=20] -->
+    <string name="keep_editing">Keep Editing</string>
 
 </resources>
