@@ -16,10 +16,11 @@
     <!-- Common margin value used throughout the app -->
     <dimen name="activity_margin">16dp</dimen>
 
-
     <dimen name="editor_padding">4dp</dimen>
     <dimen name="spinner_height">48dp</dimen>
     <dimen name="layout_width">0dp</dimen>
+    <dimen name="empty_padding">16dp</dimen>
+    <dimen name="empty_padding2">8dp</dimen>
 
 </resources>
 

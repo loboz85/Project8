@@ -46,12 +46,15 @@ import com.example.android.Project8.data.ProductContract.ProdEntry;
 public class EditorActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
-    /** Identifier for the pet data loader */
+    /**
+     * Identifier for the pet data loader
+     */
     private static final int EXISTING_PROD_LOADER = 0;
 
-    /** Content URI for the existing pet (null if it's a new pet) */
+    /**
+     * Content URI for the existing pet (null if it's a new pet)
+     */
     private Uri mCurrentProdUri;
-
 
     /**
      * EditText field to enter the product name
@@ -85,7 +88,9 @@ public class EditorActivity extends AppCompatActivity implements
      */
     private int mSupp = ProdEntry.SUPP_MARK;
 
-    /** Boolean flag that keeps track of whether the pet has been edited (true) or not (false) */
+    /**
+     * Boolean flag that keeps track of whether the prod has been edited (true) or not (false)
+     */
     private boolean mProdHasChanged = false;
 
     /**
@@ -100,7 +105,6 @@ public class EditorActivity extends AppCompatActivity implements
         }
     };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,20 +113,20 @@ public class EditorActivity extends AppCompatActivity implements
         Intent intent = getIntent();
         mCurrentProdUri = intent.getData();
 
-        // If the intent DOES NOT contain a pet content URI, then we know that we are
-        // creating a new pet.
+        // If the intent DOES NOT contain a prod content URI, then we know that we are
+        // creating a new prod.
         if (mCurrentProdUri == null) {
-            // This is a new pet, so change the app bar to say "Add a Pet"
+            // This is a new prod, so change the app bar to say "Add a Pet"
             setTitle(getString(R.string.editor_activity_title_new_prod));
             // Invalidate the options menu, so the "Delete" menu option can be hidden.
-            // (It doesn't make sense to delete a pet that hasn't been created yet.)
+            // (It doesn't make sense to delete a prod that hasn't been created yet.)
             invalidateOptionsMenu();
 
         } else {
-            // Otherwise this is an existing pet, so change app bar to say "Edit Pet"
+            // Otherwise this is an existing prod, so change app bar to say "Edit Pet"
             setTitle(getString(R.string.editor_activity_title_edit_prod));
 
-            // Initialize a loader to read the pet data from the database
+            // Initialize a loader to read the prod data from the database
             // and display the current values in the editor
             getLoaderManager().initLoader(EXISTING_PROD_LOADER, null, this);
         }
@@ -205,7 +209,6 @@ public class EditorActivity extends AppCompatActivity implements
         int quantity = Integer.parseInt(quantityString);
         int phone = Integer.parseInt(phoneString);
 
-
         // Create a ContentValues object where column names are the keys,
         // and product attributes from the editor are the values.
         ContentValues values = new ContentValues();
@@ -215,12 +218,10 @@ public class EditorActivity extends AppCompatActivity implements
         values.put(ProdEntry.COLUMN_PROD_SUPP, mSupp);
         values.put(ProdEntry.COLUMN_SUPP_PHONE, phone);
 
-        
-
-        // Determine if this is a new or existing pet by checking if mCurrentPetUri is null or not
+        // Determine if this is a new or existing prod by checking if mCurrentPetUri is null or not
         if (mCurrentProdUri == null) {
-            // This is a NEW pet, so insert a new pet into the provider,
-            // returning the content URI for the new pet.
+            // This is a NEW prod, so insert a new prod into the provider,
+            // returning the content URI for the new prod.
             Uri newUri = getContentResolver().insert(ProdEntry.CONTENT_URI, values);
 
             // Show a toast message depending on whether or not the insertion was successful.
@@ -235,7 +236,7 @@ public class EditorActivity extends AppCompatActivity implements
             }
 
         } else {
-            // Otherwise this is an EXISTING pet, so update the pet with content URI: mCurrentPetUri
+            // Otherwise this is an EXISTING prod, so update the prod with content URI: mCurrentPetUri
             // and pass in the new ContentValues. Pass in null for the selection and selection args
             // because mCurrentPetUri will already identify the correct row in the database that
             // we want to modify.
@@ -251,10 +252,7 @@ public class EditorActivity extends AppCompatActivity implements
                 Toast.makeText(this, getString(R.string.editor_update_prod_successful),
                         Toast.LENGTH_SHORT).show();
             }
-
         }
-
-
     }
 
     @Override
@@ -264,6 +262,7 @@ public class EditorActivity extends AppCompatActivity implements
         getMenuInflater().inflate(R.menu.menu_editor, menu);
         return true;
     }
+
     /**
      * This method is called after invalidateOptionsMenu(), so that the
      * menu can be updated (some menu items can be hidden or made visible).
@@ -271,14 +270,13 @@ public class EditorActivity extends AppCompatActivity implements
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        // If this is a new pet, hide the "Delete" menu item.
+        // If this is a new prod, hide the "Delete" menu item.
         if (mCurrentProdUri == null) {
             MenuItem menuItem = menu.findItem(R.id.action_delete);
             menuItem.setVisible(false);
         }
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -351,11 +349,10 @@ public class EditorActivity extends AppCompatActivity implements
         showUnsavedChangesDialog(discardButtonClickListener);
     }
 
-
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        // Since the editor shows all pet attributes, define a projection that contains
-        // all columns from the pet table
+        // Since the editor shows all prod attributes, define a projection that contains
+        // all columns from the products table
         String[] projection = {
                 ProdEntry._ID,
                 ProdEntry.COLUMN_PROD_NAME,
@@ -364,12 +361,12 @@ public class EditorActivity extends AppCompatActivity implements
                 ProdEntry.COLUMN_PROD_SUPP,
                 ProdEntry.COLUMN_SUPP_PHONE};
         // This loader will execute the ContentProvider's query method on a background thread
-        return new CursorLoader(this,   // Parent activity context
-                mCurrentProdUri,         // Query the content URI for the current pet
-                projection,             // Columns to include in the resulting Cursor
+        return new CursorLoader(this,     // Parent activity context
+                mCurrentProdUri,                // Query the content URI for the current prod
+                projection,                     // Columns to include in the resulting Cursor
                 null,                   // No selection clause
-                null,                   // No selection arguments
-                null);                  // Default sort order
+                null,                // No selection arguments
+                null);                 // Default sort order
     }
 
     @Override
@@ -382,7 +379,7 @@ public class EditorActivity extends AppCompatActivity implements
         // Proceed with moving to the first row of the cursor and reading data from it
         // (This should be the only row in the cursor)
         if (cursor.moveToFirst()) {
-            // Find the columns of pet attributes that we're interested in
+            // Find the columns of prod attributes that we're interested in
             int nameColumnIndex = cursor.getColumnIndex(ProdEntry.COLUMN_PROD_NAME);
             int priceColumnIndex = cursor.getColumnIndex(ProdEntry.COLUMN_PROD_PRICE);
             int quantityColumnIndex = cursor.getColumnIndex(ProdEntry.COLUMN_PROD_QUANTITY);
@@ -401,8 +398,8 @@ public class EditorActivity extends AppCompatActivity implements
             mPriceEditText.setText(Integer.toString(currentPrice));
             mQuantityEditText.setText(Integer.toString(currentQuantity));
             mPhoneEditText.setText(Integer.toString(currentPhone));
-            // Gender is a dropdown spinner, so map the constant value from the database
-            // into one of the dropdown options (0 is Unknown, 1 is Male, 2 is Female).
+            // Supplier is a dropdown spinner, so map the constant value from the database
+            // into one of the dropdown options.
             // Then call setSelection() so that option is displayed on screen as the current selection.
             switch (currentSupp) {
                 case ProdEntry.SUPP_JOHN:
@@ -427,7 +424,6 @@ public class EditorActivity extends AppCompatActivity implements
         mPhoneEditText.setText("");
         mSuppSpinner.setSelection(0); // Select Mark as supplier
     }
-
 
     /**
      * Show a dialog that warns the user there are unsaved changes that will be lost
@@ -459,7 +455,7 @@ public class EditorActivity extends AppCompatActivity implements
     }
 
     /**
-     * Prompt the user to confirm that they want to delete this pet.
+     * Prompt the user to confirm that they want to delete this prod.
      */
     private void showDeleteConfirmationDialog() {
         // Create an AlertDialog.Builder and set the message, and click listeners
@@ -468,14 +464,14 @@ public class EditorActivity extends AppCompatActivity implements
         builder.setMessage(R.string.delete_dialog_msg);
         builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // User clicked the "Delete" button, so delete the pet.
+                // User clicked the "Delete" button, so delete the prod.
                 deleteProd();
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked the "Cancel" button, so dismiss the dialog
-                // and continue editing the pet.
+                // and continue editing the prod.
                 if (dialog != null) {
                     dialog.dismiss();
                 }
@@ -488,14 +484,14 @@ public class EditorActivity extends AppCompatActivity implements
     }
 
     /**
-     * Perform the deletion of the pet in the database.
+     * Perform the deletion of the prod in the database.
      */
     private void deleteProd() {
-        // Only perform the delete if this is an existing pet.
+        // Only perform the delete if this is an existing prod.
         if (mCurrentProdUri != null) {
-            // Call the ContentResolver to delete the pet at the given content URI.
+            // Call the ContentResolver to delete the prod in the given content URI.
             // Pass in null for the selection and selection args because the mCurrentPetUri
-            // content URI already identifies the pet that we want.
+            // content URI already identifies the prod that we want.
             int rowsDeleted = getContentResolver().delete(mCurrentProdUri, null, null);
 
             // Show a toast message depending on whether or not the delete was successful.
@@ -509,9 +505,7 @@ public class EditorActivity extends AppCompatActivity implements
                         Toast.LENGTH_SHORT).show();
             }
         }
-
         // Close the activity
         finish();
     }
-
 }

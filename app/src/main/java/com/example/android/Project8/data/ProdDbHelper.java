@@ -26,7 +26,6 @@ import com.example.android.Project8.data.ProductContract.ProdEntry;
  */
 public class ProdDbHelper extends SQLiteOpenHelper {
 
-
     /**
      * Name of the database file
      */

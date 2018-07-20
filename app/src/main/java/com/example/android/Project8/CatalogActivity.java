@@ -41,12 +41,16 @@ import com.example.android.Project8.data.ProdDbHelper;
  * Displays list of products that were entered and stored in the app.
  */
 public class CatalogActivity extends AppCompatActivity implements
-        LoaderManager.LoaderCallbacks<Cursor>{
+        LoaderManager.LoaderCallbacks<Cursor> {
 
-    /** Identifier for the pet data loader */
+    /**
+     * Identifier for the product data loader
+     */
     private static final int PROD_LOADER = 0;
 
-    /** Adapter for the ListView */
+    /**
+     * Adapter for the ListView
+     */
     ProdCursorAdapter mCursorAdapter;
 
     /**
@@ -69,21 +73,17 @@ public class CatalogActivity extends AppCompatActivity implements
             }
         });
 
-
-        // Find the ListView which will be populated with the pet data
+        // Find the ListView which will be populated with the prod data
         ListView prodListView = (ListView) findViewById(R.id.list);
 
         // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
         View emptyView = findViewById(R.id.empty_view);
         prodListView.setEmptyView(emptyView);
 
-        // Setup an Adapter to create a list item for each row of pet data in the Cursor.
-        // There is no pet data yet (until the loader finishes) so pass in null for the Cursor.
+        // Setup an Adapter to create a list item for each row of prod data in the Cursor.
+        // There is no prod data yet (until the loader finishes) so pass in null for the Cursor.
         mCursorAdapter = new ProdCursorAdapter(this, null);
         prodListView.setAdapter(mCursorAdapter);
-
-
-
 
         // Setup the item click listener
         prodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -92,17 +92,17 @@ public class CatalogActivity extends AppCompatActivity implements
                 // Create new intent to go to {@link EditorActivity}
                 Intent intent = new Intent(CatalogActivity.this, EditorActivity.class);
 
-                // Form the content URI that represents the specific pet that was clicked on,
+                // Form the content URI that represents the specific prod that was clicked on,
                 // by appending the "id" (passed as input to this method) onto the
-                // {@link PetEntry#CONTENT_URI}.
-                // For example, the URI would be "content://com.example.android.pets/pets/2"
-                // if the pet with ID 2 was clicked on.
+                // {@link ProdEntry#CONTENT_URI}.
+                // For example, the URI would be "content://com.example.android.products/products/2"
+                // if the product with ID 2 was clicked on.
                 Uri currentProdUri = ContentUris.withAppendedId(ProdEntry.CONTENT_URI, id);
 
                 // Set the URI on the data field of the intent
                 intent.setData(currentProdUri);
 
-                // Launch the {@link EditorActivity} to display the data for the current pet.
+                // Launch the {@link EditorActivity} to display the data for the current product.
                 startActivity(intent);
             }
         });
@@ -114,9 +114,6 @@ public class CatalogActivity extends AppCompatActivity implements
         // and pass the context, which is the current activity.
         mDbHelper = new ProdDbHelper(this);
     }
-
-
-
 
     /**
      * Helper method to insert hardcoded product data into the database. For debugging purposes only.
@@ -134,21 +131,20 @@ public class CatalogActivity extends AppCompatActivity implements
         values.put(ProdEntry.COLUMN_PROD_SUPP, ProdEntry.SUPP_JOHN);
         values.put(ProdEntry.COLUMN_SUPP_PHONE, "+605784465");
 
-        // Insert a new row for Toto into the provider using the ContentResolver.
-        // Use the {@link PetEntry#CONTENT_URI} to indicate that we want to insert
+        // Insert a new row for Mars into the provider using the ContentResolver.
+        // Use the {@link ProdEntry#CONTENT_URI} to indicate that we want to insert
         // into the pets database table.
-        // Receive the new content URI that will allow us to access Toto's data in the future.
+        // Receive the new content URI that will allow us to access Mars's data in the future.
         Uri newUri = getContentResolver().insert(ProdEntry.CONTENT_URI, values);
     }
 
     /**
-     * Helper method to delete all pets in the database.
+     * Helper method to delete all products in the database.
      */
     private void deleteAllPets() {
         int rowsDeleted = getContentResolver().delete(ProdEntry.CONTENT_URI, null, null);
         Log.v("CatalogActivity", rowsDeleted + " rows deleted from pet database");
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -180,20 +176,20 @@ public class CatalogActivity extends AppCompatActivity implements
         String[] projection = {
                 ProdEntry._ID,
                 ProdEntry.COLUMN_PROD_NAME,
-                ProdEntry.COLUMN_PROD_PRICE };
+                ProdEntry.COLUMN_PROD_PRICE};
 
         // This loader will execute the ContentProvider's query method on a background thread
-        return new CursorLoader(this,   // Parent activity context
-                ProdEntry.CONTENT_URI,   // Provider content URI to query
-                projection,             // Columns to include in the resulting Cursor
+        return new CursorLoader(this,     // Parent activity context
+                ProdEntry.CONTENT_URI,          // Provider content URI to query
+                projection,                     // Columns to include in the resulting Cursor
                 null,                   // No selection clause
-                null,                   // No selection arguments
-                null);                  // Default sort order;
+                null,                // No selection arguments
+                null);                 // Default sort order;
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-    // Update {@link ProdCursorAdapter} with this new cursor containing updated prod data
+        // Update {@link ProdCursorAdapter} with this new cursor containing updated prod data
         mCursorAdapter.swapCursor(data);
     }
 

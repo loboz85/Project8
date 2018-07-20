@@ -30,11 +30,11 @@
 
         <!-- Input fields -->
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="@dimen/layout_width"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:orientation="vertical"
-            android:paddingLeft="4dp">
+            android:paddingLeft="@dimen/editor_padding">
 
             <!-- Name field -->
             <EditText

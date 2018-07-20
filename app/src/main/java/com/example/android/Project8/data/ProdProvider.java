@@ -14,13 +14,19 @@ import android.util.Log;
  */
 public class ProdProvider extends ContentProvider {
 
-    /** Tag for the log messages */
+    /**
+     * Tag for the log messages
+     */
     public static final String LOG_TAG = ProdProvider.class.getSimpleName();
 
-    /** URI matcher code for the content URI for the products table */
+    /**
+     * URI matcher code for the content URI for the products table
+     */
     private static final int PROD = 100;
 
-    /** URI matcher code for the content URI for a single product in the products table */
+    /**
+     * URI matcher code for the content URI for a single product in the products table
+     */
     private static final int PROD_ID = 101;
 
     /**
@@ -45,18 +51,19 @@ public class ProdProvider extends ContentProvider {
         // of the pets table.
         sUriMatcher.addURI(ProductContract.CONTENT_AUTHORITY, ProductContract.PATH_PROD, PROD);
 
-        // The content URI of the form "content://com.example.android.pets/pets/#" will map to the
-        // integer code {@link #PET_ID}. This URI is used to provide access to ONE single row
-        // of the pets table.
+        // The content URI of the form "content://com.example.android.prods/prods/#" will map to the
+        // integer code {@link #PROD_ID}. This URI is used to provide access to ONE single row
+        // of the products table.
         //
         // In this case, the "#" wildcard is used where "#" can be substituted for an integer.
-        // For example, "content://com.example.android.pets/pets/3" matches, but
-        // "content://com.example.android.pets/pets" (without a number at the end) doesn't match.
         sUriMatcher.addURI(ProductContract.CONTENT_AUTHORITY, ProductContract.PATH_PROD + "/#", PROD_ID);
     }
 
-    /** Database helper object */
+    /**
+     * Database helper object
+     */
     private ProdDbHelper mDbHelper;
+
     /**
      * Initialize the provider and the database helper object.
      */
@@ -84,25 +91,22 @@ public class ProdProvider extends ContentProvider {
         int match = sUriMatcher.match(uri);
         switch (match) {
             case PROD:
-                // For the PETS code, query the pets table directly with the given
+                // For the PROD code, query the products table directly with the given
                 // projection, selection, selection arguments, and sort order. The cursor
                 // could contain multiple rows of the pets table.
                 cursor = database.query(ProductContract.ProdEntry.TABLE_NAME, projection, selection, selectionArgs,
                         null, null, sortOrder);
                 break;
             case PROD_ID:
-                // For the PET_ID code, extract out the ID from the URI.
-                // For an example URI such as "content://com.example.android.pets/pets/3",
-                // the selection will be "_id=?" and the selection argument will be a
-                // String array containing the actual ID of 3 in this case.
+                // For the PROD_ID code, extract out the ID from the URI.
                 //
                 // For every "?" in the selection, we need to have an element in the selection
                 // arguments that will fill in the "?". Since we have 1 question mark in the
                 // selection, we have 1 String in the selection arguments' String array.
                 selection = ProductContract.ProdEntry._ID + "=?";
-                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
 
-                // This will perform a query on the pets table where the _id equals 3 to return a
+                // This will perform a query on the products table where the _id equals 3 to return a
                 // Cursor containing that row of the table.
                 cursor = database.query(ProductContract.ProdEntry.TABLE_NAME, projection, selection, selectionArgs,
                         null, null, sortOrder);
@@ -135,28 +139,8 @@ public class ProdProvider extends ContentProvider {
         }
     }
 
-//    /**
-//     * Insert a pet into the database with the given content values. Return the new content URI
-//     * for that specific row in the database.
-//     */
-//    private Uri insertProduct(Uri uri, ContentValues values) {
-//        // Get writeable database
-//        SQLiteDatabase database = mDbHelper.getWritableDatabase();
-//
-//        // Insert the new pet with the given values
-//        long id = database.insert(ProductContract.ProdEntry.TABLE_NAME, null, values);
-//        // If the ID is -1, then the insertion failed. Log an error and return null.
-//        if (id == -1) {
-//            Log.e(LOG_TAG, "Failed to insert row for " + uri);
-//            return null;
-//        }
-//
-//        // Return the new URI with the ID (of the newly inserted row) appended at the end
-//        return ContentUris.withAppendedId(uri, id);
-//    }
-
     /**
-     * Insert a pet into the database with the given content values. Return the new content URI
+     * Insert a prod into the database with the given content values. Return the new content URI
      * for that specific row in the database.
      */
     private Uri insertProduct(Uri uri, ContentValues values) {
@@ -166,8 +150,7 @@ public class ProdProvider extends ContentProvider {
             throw new IllegalArgumentException("Product requires a name");
         }
 
-
-        // If the price is provided, check that it's greater than or equal to 0 kg
+        // If the price is provided, check that it's greater than or equal to 0
         Integer price = values.getAsInteger(ProductContract.ProdEntry.COLUMN_PROD_PRICE);
         if (price != null && price < 0) {
             throw new IllegalArgumentException("Product requires valid price");
@@ -178,24 +161,24 @@ public class ProdProvider extends ContentProvider {
         if (quantity != null && quantity < 0) {
             throw new IllegalArgumentException("Product requires valid quantity");
         }
+
         // Get writeable database
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
 
-        // Insert the new pet with the given values
+        // Insert the new product with the given values
         long id = database.insert(ProductContract.ProdEntry.TABLE_NAME, null, values);
         // If the ID is -1, then the insertion failed. Log an error and return null.
         if (id == -1) {
             Log.e(LOG_TAG, "Failed to insert row for " + uri);
             return null;
         }
-        // Notify all listeners that the data has changed for the pet content URI
+
+        // Notify all listeners that the data has changed for the prod content URI
         getContext().getContentResolver().notifyChange(uri, null);
 
         // Return the new URI with the ID (of the newly inserted row) appended at the end
         return ContentUris.withAppendedId(uri, id);
-
     }
-
 
     /**
      * Updates the data at the given selection and selection arguments, with the new ContentValues.
@@ -208,11 +191,11 @@ public class ProdProvider extends ContentProvider {
             case PROD:
                 return updateProduct(uri, contentValues, selection, selectionArgs);
             case PROD_ID:
-                // For the PET_ID code, extract out the ID from the URI,
+                // For the PROD_ID code, extract out the ID from the URI,
                 // so we know which row to update. Selection will be "_id=?" and selection
                 // arguments will be a String array containing the actual ID.
                 selection = ProductContract.ProdEntry._ID + "=?";
-                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 return updateProduct(uri, contentValues, selection, selectionArgs);
             default:
                 throw new IllegalArgumentException("Update is not supported for " + uri);
@@ -220,12 +203,12 @@ public class ProdProvider extends ContentProvider {
     }
 
     /**
-     * Update pets in the database with the given content values. Apply the changes to the rows
+     * Update products in the database with the given content values. Apply the changes to the rows
      * specified in the selection and selection arguments (which could be 0 or 1 or more pets).
      * Return the number of rows that were successfully updated.
      */
     private int updateProduct(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        // If the {@link PetEntry#COLUMN_PET_NAME} key is present,
+        // If the {@link ProdEntry#COLUMN_PROD_NAME} key is present,
         // check that the name value is not null.
         if (values.containsKey(ProductContract.ProdEntry.COLUMN_PROD_NAME)) {
             String name = values.getAsString(ProductContract.ProdEntry.COLUMN_PROD_NAME);
@@ -233,37 +216,26 @@ public class ProdProvider extends ContentProvider {
                 throw new IllegalArgumentException("Product requires a name");
             }
         }
-//
-//        // If the {@link PetEntry#COLUMN_PET_GENDER} key is present,
-//        // check that the gender value is valid.
-//        if (values.containsKey(PetEntry.COLUMN_PET_GENDER)) {
-//            Integer gender = values.getAsInteger(PetEntry.COLUMN_PET_GENDER);
-//            if (gender == null || !PetEntry.isValidGender(gender)) {
-//                throw new IllegalArgumentException("Pet requires valid gender");
-//            }
-//        }
 
-        // If the {@link PetEntry#COLUMN_PET_WEIGHT} key is present,
-        // check that the weight value is valid.
+        // If the {@link ProdEntry#COLUMN_PROD_PRICE} key is present,
+        // check that the price value is valid.
         if (values.containsKey(ProductContract.ProdEntry.COLUMN_PROD_PRICE)) {
-            // Check that the weight is greater than or equal to 0 kg
+            // Check that the price is greater than or equal to 0
             Integer price = values.getAsInteger(ProductContract.ProdEntry.COLUMN_PROD_PRICE);
             if (price != null && price < 0) {
                 throw new IllegalArgumentException("Product requires valid price");
             }
         }
 
-        // If the {@link PetEntry#COLUMN_PET_WEIGHT} key is present,
-        // check that the weight value is valid.
+        // If the {@link ProdEntry#COLUMN_PROD_QUANTITY} key is present,
+        // check that the quantity value is valid.
         if (values.containsKey(ProductContract.ProdEntry.COLUMN_PROD_QUANTITY)) {
-            // Check that the weight is greater than or equal to 0 kg
-            Integer price = values.getAsInteger(ProductContract.ProdEntry.COLUMN_PROD_QUANTITY);
-            if (price != null && price < 0) {
+            // Check that the quantity is greater than or equal to 0
+            Integer quantity = values.getAsInteger(ProductContract.ProdEntry.COLUMN_PROD_QUANTITY);
+            if (quantity != null && quantity < 0) {
                 throw new IllegalArgumentException("Product requires valid quantity");
             }
         }
-
-        // No need to check the breed, any value is valid (including null).
 
         // If there are no values to update, then don't try to update the database
         if (values.size() == 0) {
@@ -284,7 +256,6 @@ public class ProdProvider extends ContentProvider {
 
         // Return the number of rows updated
         return rowsUpdated;
-
     }
 
     /**
@@ -307,7 +278,7 @@ public class ProdProvider extends ContentProvider {
             case PROD_ID:
                 // Delete a single row given by the ID in the URI
                 selection = ProductContract.ProdEntry._ID + "=?";
-                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 rowsDeleted = database.delete(ProductContract.ProdEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             default:
@@ -322,9 +293,7 @@ public class ProdProvider extends ContentProvider {
 
         // Return the number of rows deleted
         return rowsDeleted;
-
     }
-
 
     /**
      * Returns the MIME type of data for the content URI.

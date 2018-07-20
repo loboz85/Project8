@@ -25,4 +25,11 @@
 
     <!-- Primary dark color for the editor -->
     <color name="editorColorPrimaryDark">#394450</color>
+
+    <!-- List Color -->
+    <color name="ListNameColor">#2B3D4D</color>
+
+    <!-- List Color -->
+    <color name="ListSummaryColor">#AEB6BD</color>
+
 </resources>
