@@ -32,6 +32,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.util.Log;
 
 import com.example.android.Project8.data.ProductContract.ProdEntry;
 import com.example.android.Project8.data.ProdDbHelper;
