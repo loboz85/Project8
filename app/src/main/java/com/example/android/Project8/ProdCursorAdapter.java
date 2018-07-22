@@ -17,13 +17,18 @@
 
 package com.example.android.Project8;
 
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.Project8.data.ProductContract.ProdEntry;
 
@@ -75,18 +80,50 @@ public class ProdCursorAdapter extends CursorAdapter {
         // Find individual views that we want to modify in the list item layout
         TextView nameTextView = (TextView) view.findViewById(R.id.name);
         TextView summaryTextView = (TextView) view.findViewById(R.id.summary);
+//        ImageButton buyButton = (ImageButton) view.findViewById(R.id.buy_button);
+        TextView quantityTextView = (TextView) view.findViewById(R.id.quantity);
 
         // Find the columns of prod attributes that we're interested in
         int nameColumnIndex = cursor.getColumnIndex(ProdEntry.COLUMN_PROD_NAME);
         int priceColumnIndex = cursor.getColumnIndex(ProdEntry.COLUMN_PROD_PRICE);
+        int quantityColumnIndex = cursor.getColumnIndex(ProdEntry.COLUMN_PROD_QUANTITY);
 
         // Read the prod attributes from the Cursor for the current prod
         String prodName = cursor.getString(nameColumnIndex);
-        String prodBreed = cursor.getString(priceColumnIndex);
+        String prodPrice = cursor.getString(priceColumnIndex);
+        String prodQuantity = cursor.getString(quantityColumnIndex);
+
+        // Display text
+        String prodPriceText = "Price: " + prodPrice + " $";
+        String prodQuantityText = "Quantity: " + prodQuantity;
+
 
         // Update the TextViews with the attributes for the current prod
         nameTextView.setText(prodName);
-        summaryTextView.setText(prodBreed);
+        summaryTextView.setText(prodPriceText);
+        quantityTextView.setText(prodQuantityText);
+
+
+//        String currentQuantity = cursor.getString(quantityColumnIndex);
+//        final int quantityIntCurrent = Integer.valueOf(currentQuantity);
+//
+//        final int productId = cursor.getInt(cursor.getColumnIndex(ProdEntry._ID));
+//
+//        //Sell button which decrease quantity in storage
+//        buyButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View view) {
+//                if (quantityIntCurrent > 0) {
+//                    int newQuantity = quantityIntCurrent - 1;
+//                    Uri quantityUri = ContentUris.withAppendedId(ProdEntry.CONTENT_URI, productId);
+//
+//                    ContentValues values = new ContentValues();
+//                    values.put(ProdEntry.COLUMN_PROD_QUANTITY, newQuantity);
+//                    context.getContentResolver().update(quantityUri, values, null, null);
+//                } else {
+//                    Toast.makeText(context, "This game is out of stock!", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
     }
 }
 
