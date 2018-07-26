@@ -84,6 +84,11 @@ public class EditorActivity extends AppCompatActivity implements
     private Spinner mSuppSpinner;
 
     /**
+     * int for quantity
+     */
+    private int givenQuantity;
+
+    /**
      * Product supplier. The possible valid values are in the ProductContract.java file:
      * {@link ProdEntry#SUPP_MARK}, {@link ProdEntry#SUPP_JOHN}, or
      * {@link ProdEntry#SUPP_ANN}.
@@ -143,6 +148,13 @@ public class EditorActivity extends AppCompatActivity implements
         mPhoneEditText = (EditText) findViewById(R.id.edit_phone);
         mSuppSpinner = (Spinner) findViewById(R.id.spinner_supp);
 
+
+        /* Button for increasing quantity */
+        ImageButton mIncrease = (ImageButton) findViewById(R.id.increase);
+
+        /* Button for decreasing quantity  */
+        ImageButton mDecrease = (ImageButton) findViewById(R.id.decrease);
+
         // Setup OnTouchListeners on all the input fields, so we can determine if the user
         // has touched or modified them. This will let us know if there are unsaved changes
         // or not, if the user tries to leave the editor without saving.
@@ -150,9 +162,49 @@ public class EditorActivity extends AppCompatActivity implements
         mPriceEditText.setOnTouchListener(mTouchListener);
         mQuantityEditText.setOnTouchListener(mTouchListener);
         mPhoneEditText.setOnTouchListener(mTouchListener);
+        mIncrease.setOnTouchListener(mTouchListener);
+        mDecrease.setOnTouchListener(mTouchListener);
         mSuppSpinner.setOnTouchListener(mTouchListener);
 
-        
+        //increase quantity
+        mIncrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String quantity = mQuantityEditText.getText().toString();
+                if (TextUtils.isEmpty(quantity)) {
+
+                    Toast.makeText(EditorActivity.this, "quantity_cannot_be_empty", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    givenQuantity = Integer.parseInt(quantity);
+                    mQuantityEditText.setText(String.valueOf(givenQuantity + 1));
+                }
+
+            }
+        });
+
+        //decrease quantity
+        mDecrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String quantity = mQuantityEditText.getText().toString();
+                if (TextUtils.isEmpty(quantity)) {
+                    Toast.makeText(EditorActivity.this, "quantity_cannot_be_empty", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    givenQuantity = Integer.parseInt(quantity);
+                    //To validate if quantity is greater than 0
+                    if ((givenQuantity - 1) >= 0) {
+                        mQuantityEditText.setText(String.valueOf(givenQuantity - 1));
+                    } else {
+                        Toast.makeText(EditorActivity.this, "quantity_cannot_be_less_0", Toast.LENGTH_SHORT).show();
+                        return;
+
+                    }
+                }
+            }
+        });
 
         /* Button for phone call  */
         ImageButton mPhone = (ImageButton) findViewById(R.id.phoneButton);
