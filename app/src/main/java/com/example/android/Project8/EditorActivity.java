@@ -152,6 +152,22 @@ public class EditorActivity extends AppCompatActivity implements
         mPhoneEditText.setOnTouchListener(mTouchListener);
         mSuppSpinner.setOnTouchListener(mTouchListener);
 
+        
+
+        /* Button for phone call  */
+        ImageButton mPhone = (ImageButton) findViewById(R.id.phoneButton);
+
+        //button for phone call
+        mPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String PhoneNum = mPhoneEditText.getText().toString().trim();
+                orderByPhone(PhoneNum);
+
+            }
+        });
+
+
         setupSpinner();
     }
 
@@ -512,5 +528,18 @@ public class EditorActivity extends AppCompatActivity implements
         }
         // Close the activity
         finish();
+    }
+
+    /**
+     * Call products supplier
+     *
+     * @param phoneNumber - supplier's phone number
+     */
+    private void orderByPhone(String phoneNumber) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:" + phoneNumber));
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 }

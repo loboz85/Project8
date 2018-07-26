@@ -69,6 +69,20 @@
                 android:hint="@string/quantity"
                 android:inputType="number" />
 
+            <ImageButton
+                android:id="@+id/increase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:src="@drawable/phone" />
+
+            <ImageButton
+                android:id="@+id/decrease"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:src="@drawable/phone" />
+
         </LinearLayout>
     </LinearLayout>
 
@@ -109,6 +123,13 @@
 
 
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/phoneButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:src="@drawable/phone" />
 
 
 </LinearLayout>
