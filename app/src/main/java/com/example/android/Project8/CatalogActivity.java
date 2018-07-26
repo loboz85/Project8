@@ -110,17 +110,14 @@ public class CatalogActivity extends AppCompatActivity implements
         // Kick off the loader
         getLoaderManager().initLoader(PROD_LOADER, null, this);
 
-        // To access our database, we instantiate our subclass of SQLiteOpenHelper
-        // and pass the context, which is the current activity.
-        mDbHelper = new ProdDbHelper(this);
+
     }
 
     /**
      * Helper method to insert hardcoded product data into the database. For debugging purposes only.
      */
     private void insertProduct() {
-        // Gets the database in write mode
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
 
         // Create a ContentValues object where column names are the keys,
         // and Mars products attributes are the values.

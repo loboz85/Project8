@@ -76,11 +76,11 @@ public class ProdCursorAdapter extends CursorAdapter {
      *                correct row.
      */
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public void bindView(View view, final Context context, Cursor cursor) {
         // Find individual views that we want to modify in the list item layout
         TextView nameTextView = (TextView) view.findViewById(R.id.name);
         TextView summaryTextView = (TextView) view.findViewById(R.id.summary);
-//        ImageButton buyButton = (ImageButton) view.findViewById(R.id.buy_button);
+        ImageButton buyButton = (ImageButton) view.findViewById(R.id.buy_button);
         TextView quantityTextView = (TextView) view.findViewById(R.id.quantity);
 
         // Find the columns of prod attributes that we're interested in
@@ -103,27 +103,26 @@ public class ProdCursorAdapter extends CursorAdapter {
         summaryTextView.setText(prodPriceText);
         quantityTextView.setText(prodQuantityText);
 
+        final int stockColumnIndex = cursor.getColumnIndex(ProdEntry.COLUMN_PROD_QUANTITY);
+        String currentQuantity = cursor.getString(stockColumnIndex);
+        final int quantityIntCurrent = Integer.valueOf(currentQuantity);
+        final int productId = cursor.getInt(cursor.getColumnIndex(ProdEntry._ID));
 
-//        String currentQuantity = cursor.getString(quantityColumnIndex);
-//        final int quantityIntCurrent = Integer.valueOf(currentQuantity);
-//
-//        final int productId = cursor.getInt(cursor.getColumnIndex(ProdEntry._ID));
-//
-//        //Sell button which decrease quantity in storage
-//        buyButton.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View view) {
-//                if (quantityIntCurrent > 0) {
-//                    int newQuantity = quantityIntCurrent - 1;
-//                    Uri quantityUri = ContentUris.withAppendedId(ProdEntry.CONTENT_URI, productId);
-//
-//                    ContentValues values = new ContentValues();
-//                    values.put(ProdEntry.COLUMN_PROD_QUANTITY, newQuantity);
-//                    context.getContentResolver().update(quantityUri, values, null, null);
-//                } else {
-//                    Toast.makeText(context, "This game is out of stock!", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
+        //Sell button which decrease quantity in storage
+        buyButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                if (quantityIntCurrent > 0) {
+                    int newQuantity = quantityIntCurrent - 1;
+                    Uri quantityUri = ContentUris.withAppendedId(ProdEntry.CONTENT_URI, productId);
+
+                    ContentValues values = new ContentValues();
+                    values.put(ProdEntry.COLUMN_PROD_QUANTITY, newQuantity);
+                    context.getContentResolver().update(quantityUri, values, null, null);
+                } else {
+                    Toast.makeText(context, "This product is out of stock!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }
 

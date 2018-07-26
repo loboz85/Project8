@@ -34,9 +34,11 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.view.MotionEvent;
+import android.widget.ImageButton;
 
 import com.example.android.Project8.data.ProductContract.ProdEntry;
 
@@ -52,7 +54,7 @@ public class EditorActivity extends AppCompatActivity implements
     private static final int EXISTING_PROD_LOADER = 0;
 
     /**
-     * Content URI for the existing pet (null if it's a new pet)
+     * Content URI for the existing prod (null if it's a new pet)
      */
     private Uri mCurrentProdUri;
 
@@ -105,6 +107,7 @@ public class EditorActivity extends AppCompatActivity implements
         }
     };
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,6 +118,8 @@ public class EditorActivity extends AppCompatActivity implements
 
         // If the intent DOES NOT contain a prod content URI, then we know that we are
         // creating a new prod.
+
+
         if (mCurrentProdUri == null) {
             // This is a new prod, so change the app bar to say "Add a Pet"
             setTitle(getString(R.string.editor_activity_title_new_prod));
