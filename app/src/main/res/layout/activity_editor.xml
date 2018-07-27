@@ -70,7 +70,7 @@
                 android:inputType="number" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/editor_padding">
@@ -79,7 +79,7 @@
                 android:id="@+id/decrease"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:paddingRight="@dimen/activity_margin"
                 android:src="@drawable/minus"
                 android:background="@null"/>
 
@@ -87,7 +87,6 @@
                 android:id="@+id/increase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
                 android:src="@drawable/plus"
                 android:background="@null"/>
 
@@ -140,6 +139,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:src="@drawable/phone"
+        android:padding="@dimen/activity_margin"
         android:background="@null"/>
 
 

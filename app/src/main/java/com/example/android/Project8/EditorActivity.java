@@ -174,7 +174,7 @@ public class EditorActivity extends AppCompatActivity implements
                 String quantity = mQuantityEditText.getText().toString();
                 if (TextUtils.isEmpty(quantity)) {
 
-                    Toast.makeText(EditorActivity.this, "quantity_cannot_be_empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditorActivity.this, "Quantity can't be empty", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
                     givenQuantity = Integer.parseInt(quantity);
@@ -190,7 +190,7 @@ public class EditorActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 String quantity = mQuantityEditText.getText().toString();
                 if (TextUtils.isEmpty(quantity)) {
-                    Toast.makeText(EditorActivity.this, "quantity_cannot_be_empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditorActivity.this, "Quantity can't be empty", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
                     givenQuantity = Integer.parseInt(quantity);
@@ -198,7 +198,7 @@ public class EditorActivity extends AppCompatActivity implements
                     if ((givenQuantity - 1) >= 0) {
                         mQuantityEditText.setText(String.valueOf(givenQuantity - 1));
                     } else {
-                        Toast.makeText(EditorActivity.this, "quantity_cannot_be_less_0", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditorActivity.this, "Quantity can't be negative", Toast.LENGTH_SHORT).show();
                         return;
 
                     }
@@ -206,10 +206,10 @@ public class EditorActivity extends AppCompatActivity implements
             }
         });
 
-        /* Button for phone call  */
+        // Button for phone call
         ImageButton mPhone = (ImageButton) findViewById(R.id.phoneButton);
 
-        //button for phone call
+        //Button for phone call
         mPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
