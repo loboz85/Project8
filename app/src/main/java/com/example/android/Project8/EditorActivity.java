@@ -273,7 +273,7 @@ public class EditorActivity extends AppCompatActivity implements
         String quantityString = mQuantityEditText.getText().toString().trim();
         String phoneString = mPhoneEditText.getText().toString().trim();
 
-        if ("".equals(priceString) || "".equals(quantityString) || "".equals(phoneString)) {
+        if ("".equals(nameString) || "".equals(priceString) || "".equals(quantityString) || "".equals(phoneString)) {
 
             Toast.makeText(this, "All fields need to be filled, please add product again", Toast.LENGTH_SHORT).show();
             return;
